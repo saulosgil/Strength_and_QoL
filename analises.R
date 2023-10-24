@@ -12,12 +12,12 @@ df <- df |>
 
 low_strength <-
   df |>
-  slice(1:108) |>
+  slice(1:100) |>
   mutate(hgs_class = "B_low_strength")
 
 hig_strength <-
   df |>
-  slice(109:216) |>
+  slice(101:200) |>
   mutate(hgs_class = "A_hig_strength")
 
 df <- bind_rows(low_strength,hig_strength)
@@ -28,12 +28,12 @@ df <- df |>
 
 low_tug <-
   df |>
-  slice(1:108) |>
+  slice(1:100) |>
   mutate(tug_class = "A_hig_tug")
 
 hig_tug <-
   df |>
-  slice(109:216) |>
+  slice(101:200) |>
   mutate(tug_class = "B_low_tug")
 
 
@@ -45,12 +45,12 @@ df <- df |>
 
 low_ts <-
   df |>
-  slice(1:108) |>
+  slice(1:100) |>
   mutate(ts_class = "B_low_ts")
 
 hig_ts <-
   df |>
-  slice(109:216) |>
+  slice(101:200) |>
   mutate(ts_class = "A_hig_ts")
 
 df <- bind_rows(low_ts,hig_ts)
