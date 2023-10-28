@@ -98,7 +98,37 @@ df_paper <-
          who_qol3 = as.numeric(unlist(who_qol3)),
          who_qol8 = as.numeric(unlist(who_qol8)),
          who_qol13 = as.numeric(unlist(who_qol13))
-  )
+  ) |>
+  select(-who_qol1) |>
+  # ajustanto as perguntas do WHO (2=1, 3=2 etc)
+  rename(
+    who_qol1 = who_qol2,
+    who_qol2 = who_qol3,
+    who_qol3 = who_qol4,
+    who_qol4 = who_qol5,
+    who_qol5 = who_qol6,
+    who_qol6 = who_qol7,
+    who_qol7 = who_qol8,
+    who_qol8 = who_qol9,
+    who_qol9 = who_qol10,
+    who_qol10 = who_qol11,
+    who_qol11 = who_qol12,
+    who_qol12 = who_qol13,
+    who_qol13 = who_qol14,
+    who_qol14 = who_qol15,
+    who_qol15 = who_qol16,
+    who_qol16 = who_qol17,
+    who_qol17 = who_qol18,
+    who_qol18 = who_qol19,
+    who_qol19 = who_qol20,
+    who_qol20 = who_qol21,
+    who_qol21 = who_qol22,
+    who_qol22 = who_qol23,
+    who_qol23 = who_qol24,
+    who_qol24 = who_qol25,
+    who_qol25 = who_qol26,
+    who_qol26 = who_qol27
+)
 
 # verificando a base
 glimpse(df_paper)
@@ -120,85 +150,100 @@ df_paper_ajustada <-
          -ts_tent_1,
          -ts_tent_2,
          -ts_tent_3,
-         -who_qol1,
          -medicamentos) |>
 # ajustando as questões do WHOQoL
-  mutate(who_qol4 = case_when(who_qol4 == 1 ~ 5,
+  mutate(who_qol3 = case_when(who_qol3 == 1 ~ 5,
+                              who_qol3 == 2 ~ 4,
+                              who_qol3 == 3 ~ 3,
+                              who_qol3 == 4 ~ 2,
+                              who_qol3 == 5 ~ 1),
+         who_qol4 = case_when(who_qol4 == 1 ~ 5,
                               who_qol4 == 2 ~ 4,
                               who_qol4 == 3 ~ 3,
                               who_qol4 == 4 ~ 2,
                               who_qol4 == 5 ~ 1),
-         who_qol5 = case_when(who_qol5 == 1 ~ 5,
-                              who_qol5 == 2 ~ 4,
-                              who_qol5 == 3 ~ 3,
-                              who_qol5 == 4 ~ 2,
-                              who_qol5 == 5 ~ 1),
-         who_qol27 = case_when(who_qol27 == 1 ~ 5,
-                               who_qol27 == 2 ~ 4,
-                               who_qol27 == 3 ~ 3,
-                               who_qol27 == 4 ~ 2,
-                               who_qol27 == 5 ~ 1))
+         who_qol26 = case_when(who_qol26 == 1 ~ 5,
+                               who_qol26 == 2 ~ 4,
+                               who_qol26 == 3 ~ 3,
+                               who_qol26 == 4 ~ 2,
+                               who_qol26 == 5 ~ 1))
 
 # Calculando o WHOQoL -------------------------------------------------------------------------
 # físico
 whoqol_fisico <-
   df_paper_ajustada |>
-  select(who_qol4,
-         who_qol5,
-         who_qol11,
+  select(who_qol3,
+         who_qol4,
+         who_qol10,
+         who_qol15,
          who_qol16,
-         who_qol7,
-         who_qol18,
-         who_qol19)
+         who_qol17,
+         who_qol18)
 
 whoqol_fisico <-
   whoqol_fisico |>
-  mutate(whoqol_fisico = apply(whoqol_fisico[,1:6],MARGIN = 1,FUN = sum)/7) |>
+  mutate(whoqol_fisico = apply(whoqol_fisico[,1:7],MARGIN = 1,FUN = mean)*4) |>
   select(whoqol_fisico)
+
+# verificando os valores - range 0-20
+min(whoqol_fisico, na.rm = TRUE)
+max(whoqol_fisico, na.rm = TRUE)
 
 # psicologico
 whoqol_psicol <-
   df_paper_ajustada |>
-  select(who_qol6,
+  select(who_qol5,
+         who_qol6,
          who_qol7,
-         who_qol8,
-         who_qol12,
-         who_qol20,
-         who_qol27)
+         who_qol11,
+         who_qol19,
+         who_qol26)
 
 whoqol_psicol <-
   whoqol_psicol |>
-  mutate(whoqol_psicol = apply(whoqol_psicol[,1:5],MARGIN = 1,FUN = sum)/6) |>
+  mutate(whoqol_psicol = apply(whoqol_psicol[,1:6],MARGIN = 1,FUN = mean)*4) |>
   select(whoqol_psicol)
+
+# verificando os valores - range 0-20
+min(whoqol_psicol, na.rm = TRUE)
+max(whoqol_psicol, na.rm = TRUE)
 
 # Relações sociais
 whoqol_social <-
   df_paper_ajustada |>
-  select(who_qol21,
-         who_qol22,
-         who_qol23)
+  select(who_qol20,
+         who_qol21,
+         who_qol22)
 
 whoqol_social <-
   whoqol_social |>
-  mutate(whoqol_social = apply(whoqol_social[,1:3],MARGIN = 1,FUN = sum)/3) |>
+  mutate(whoqol_social = apply(whoqol_social[,1:3],MARGIN = 1,FUN = mean)*4) |>
   select(whoqol_social)
+
+# verificando os valores - range 0-20
+min(whoqol_social, na.rm = TRUE)
+max(whoqol_social, na.rm = TRUE)
 
 # Meio ambiente
 whoqol_ambiente <-
   df_paper_ajustada |>
-  select(who_qol9,
-         who_qol10,
+  select(who_qol8,
+         who_qol9,
+         who_qol12,
          who_qol13,
          who_qol14,
-         who_qol15,
+         who_qol23,
          who_qol24,
-         who_qol25,
-         who_qol26)
+         who_qol25)
 
 whoqol_ambiente <-
   whoqol_ambiente |>
-  mutate(whoqol_ambiente = apply(whoqol_ambiente[,1:3],MARGIN = 1,FUN = sum)/8) |>
+  mutate(whoqol_ambiente = apply(whoqol_ambiente[,1:8],MARGIN = 1,FUN = mean)*4) |>
   select(whoqol_ambiente)
+
+# verificando os valores - range 0-20
+min(whoqol_ambiente, na.rm = TRUE)
+max(whoqol_ambiente, na.rm = TRUE)
 
 # Juntando os dominios do WHOQol com a base ---------------------------------------------------
 #juntado os dominios
@@ -206,13 +251,23 @@ fis_psi <- bind_cols(whoqol_fisico, whoqol_psicol)
 fis_psi_soc <- bind_cols(fis_psi,whoqol_social)
 todos_dominios <- bind_cols(fis_psi_soc,whoqol_ambiente)
 
+# transformar scores em escala de 0-100
+todos_dominios <-
+  todos_dominios |>
+  mutate(
+    whoqol_fisico_escore_100 = (whoqol_fisico - 4)*(100/16),
+    whoqol_psicol_escore_100 = (whoqol_psicol - 4)*(100/16),
+    whoqol_social_escore_100 = (whoqol_social - 4)*(100/16),
+    whoqol_ambiente_escore_100 = (whoqol_ambiente - 4)*(100/16),
+  )
+
 # Juntando os dominios do WHOQoL com a base e removendo as colunas isoladas
 df_paper_ajustada_final <- bind_cols(df_paper_ajustada, todos_dominios)
 
 df_paper_ajustada_final <-
   df_paper_ajustada_final |>
-  rename(who_percep_saude = who_qol2,
-         who_satisf_saude = who_qol3) |>
+  rename(who_percep_saude = who_qol1,
+         who_satisf_saude = who_qol2) |>
   select(-starts_with("who_qol"),
          -data_nasc) |>
     relocate(idade, .after = nome) |>
@@ -233,7 +288,6 @@ tempData <- mice::mice(df_paper_ajustada_final,m=5,maxit=50,meth='pmm',seed=500)
 
 # Base imputada
 df <- complete(tempData,1)
-mice::md.pattern(df)
 glimpse(df)
 
 # Verificando os missing
