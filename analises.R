@@ -196,6 +196,67 @@ t.test(whoqol_social_escore_100 ~ hgs_class, data = df)
 ## environment domain
 t.test(whoqol_ambiente_escore_100 ~ hgs_class, data = df)
 
+# Correlações de pearson ----------------------------------------------------------------------
+# Physical domain
+## Pearson correlation
+
+cor.test(x = df$hgs_max,y = df$whoqol_fisico_escore_100,method = "p", na.rm = TRUE)
+
+## Scatter plot
+
+df |>
+  ggplot(mapping = aes(
+    x = hgs_max,
+    y = whoqol_fisico_escore_100)) +
+  geom_smooth(method = "lm") +
+  geom_point() +
+  theme_bw()
+
+# Psycological domain
+## Pearson correlation
+
+cor.test(x = df$hgs_max,y = df$whoqol_psicol_escore_100,method = "p", na.rm = TRUE)
+
+## Scatter plot
+
+df |>
+  ggplot(mapping = aes(
+    x = hgs_max,
+    y = whoqol_psicol_escore_100)) +
+  geom_smooth(method = "lm") +
+  geom_point() +
+  theme_bw()
+
+# Social domain
+## Pearson correlation
+
+cor.test(x = df$hgs_max,y = df$whoqol_social_escore_100,method = "p", na.rm = TRUE)
+
+## Scatter plot
+
+df |>
+  ggplot(mapping = aes(
+    x = hgs_max,
+    y = whoqol_social_escore_100)) +
+  geom_smooth(method = "lm") +
+  geom_point() +
+  theme_bw()
+
+# Enviroment domain
+## Pearson correlation
+
+cor.test(x = df$hgs_max,y = df$whoqol_ambiente_escore_100,method = "p", na.rm = TRUE)
+
+## Scatter plot
+
+df |>
+  ggplot(mapping = aes(
+    x = hgs_max,
+    y = whoqol_ambiente_escore_100)) +
+  geom_smooth(method = "lm") +
+  geom_point() +
+  theme_bw()
+
 # Regressões lineares -------------------------------------------------------------------------
 ## Physical domain
 #### Crude
