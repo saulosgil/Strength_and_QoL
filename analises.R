@@ -204,13 +204,22 @@ cor.test(x = df$hgs_max,y = df$whoqol_fisico_escore_100,method = "p", na.rm = TR
 
 ## Scatter plot
 
-df |>
+s1 <-
+  df |>
   ggplot(mapping = aes(
     x = hgs_max,
     y = whoqol_fisico_escore_100)) +
   geom_smooth(method = "lm") +
   geom_point() +
-  theme_bw()
+  theme_bw() +
+  xlab(label = "handgrip strength (kgf)") +
+  ylab(label = "WHOQoL score - Physical domain (a.u.)") +
+  labs(subtitle = "Handgrip strength vs. WHOQoL score - Physical domain") +
+  annotate("text",
+           x = 58.3,
+           y = 9,
+           label = "R = 0.27; P < 0.0001",
+           parse = FALSE)
 
 # Psycological domain
 ## Pearson correlation
@@ -219,13 +228,22 @@ cor.test(x = df$hgs_max,y = df$whoqol_psicol_escore_100,method = "p", na.rm = TR
 
 ## Scatter plot
 
-df |>
+s2 <-
+  df |>
   ggplot(mapping = aes(
     x = hgs_max,
     y = whoqol_psicol_escore_100)) +
   geom_smooth(method = "lm") +
   geom_point() +
-  theme_bw()
+  xlab(label = "handgrip strength (kgf)") +
+  ylab(label = "WHOQoL score - Psychological domain (a.u.)") +
+  labs(subtitle = "Handgrip strength vs. WHOQoL score - Psychological domain") +
+  theme_bw() +
+  annotate("text",
+           x = 58.3,
+           y = 9,
+           label = "R = 0.17; P = 0.0117",
+           parse = FALSE)
 
 # Social domain
 ## Pearson correlation
@@ -234,13 +252,22 @@ cor.test(x = df$hgs_max,y = df$whoqol_social_escore_100,method = "p", na.rm = TR
 
 ## Scatter plot
 
-df |>
+s3 <-
+  df |>
   ggplot(mapping = aes(
     x = hgs_max,
     y = whoqol_social_escore_100)) +
   geom_smooth(method = "lm") +
   geom_point() +
-  theme_bw()
+  xlab(label = "handgrip strength (kgf)") +
+  ylab(label = "WHOQoL score - Social domain (a.u.)") +
+  labs(subtitle = "Handgrip strength vs. WHOQoL score - Social domain") +
+  theme_bw() +
+  annotate("text",
+           x = 58.3,
+           y = 0,
+           label = "R = 0.09; P = 0.1957",
+           parse = FALSE)
 
 # Enviroment domain
 ## Pearson correlation
@@ -249,13 +276,25 @@ cor.test(x = df$hgs_max,y = df$whoqol_ambiente_escore_100,method = "p", na.rm = 
 
 ## Scatter plot
 
-df |>
+s4 <-
+  df |>
   ggplot(mapping = aes(
     x = hgs_max,
     y = whoqol_ambiente_escore_100)) +
   geom_smooth(method = "lm") +
   geom_point() +
-  theme_bw()
+  xlab(label = "handgrip strength (kgf)") +
+  ylab(label = "WHOQoL score - Environment domain (a.u.)") +
+  labs(subtitle = "Handgrip strength vs. WHOQoL score - Environment domain") +
+  theme_bw() +
+  annotate("text",
+           x = 58.3,
+           y = 9,
+           label = "R = 0.08; P = 0.2161",
+           parse = FALSE)
+
+# layout
+(s1+s2)/(s3+s4)
 
 # Regressões lineares -------------------------------------------------------------------------
 ## Physical domain
